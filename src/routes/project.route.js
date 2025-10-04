@@ -1,12 +1,22 @@
 import express from "express";
-import { authMiddleware } from "../middleware/auth.middleware.js";
-import { createProject, getOpenProjects, getProjectBids } from "../controllers/project.controller.js";
+import {
+  getDeveloperProfile,
+  updateDeveloperProfile,
+  getAllDevelopers,
+  getDeveloperBids,
+  getDeveloperProjects,
+} from "../controllers/developer.controller.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
+
 const router = express.Router();
 
-router.post("/create", authMiddleware("user"), createProject);
-router.get("/open", authMiddleware(), getOpenProjects);
+// developer routes
+router.get("/me", verifyJWT, getDeveloperProfile);
+router.put("/update", verifyJWT, updateDeveloperProfile);
+router.get("/bids", verifyJWT, getDeveloperBids);
+router.get("/projects", verifyJWT, getDeveloperProjects);
 
 
-router.get("/:id/bids", authMiddleware(), getProjectBids);
+router.get("/all", getAllDevelopers);
 
 export default router;

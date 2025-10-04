@@ -29,7 +29,7 @@ const generateAccessAndRefereshToken = async (userId) =>{
     }
 }
 
-
+// registers new users
 const registerUser = asyncHandler( async (req, res) => {
    
      const {name, email, role, password} =req.body
@@ -55,7 +55,7 @@ const registerUser = asyncHandler( async (req, res) => {
         role,
         password, 
     })
-
+    // .select removes sensitive fields like password and refreshToken if user finds the created user
     const createdUser = await User.findById(user._id).select(
         "-password -refreshToken"
     )
@@ -70,6 +70,7 @@ const registerUser = asyncHandler( async (req, res) => {
 
 })
 
+// when user logs in
 const loginUser = asyncHandler(async (req,res) => {
     
 
@@ -124,21 +125,26 @@ const logoutUser = asyncHandler( async (req, res) => {
         // aggregation pipelines
         req.user._id,
         {
+            // mongodb operator used to remove a field here it deletes the refreshToken field from the user document in database so after logout refresh token is removed: so can be reused
             $unset: {
                 refreshToken: "",
             }
         },
+        // this tells mongoose to return updated document
         {
             new: true
         }
     )
    
     const options = {
+        // means cookie cannot be accessed via through javascript(adds secutity)
         httpOnly: true,
+        // cookie will be sent over HTTPS(NOT HTTP)
         secure: true
     }
     return res
     .status(200)
+    // this clear both cookie safely during logout
     .clearCookie("accessToken", options)
     .clearCookie("refreshToken", options)
     .json(new ApiResponse(200, {} ,"User logged out Successfully"))
