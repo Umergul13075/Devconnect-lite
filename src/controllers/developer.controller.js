@@ -2,8 +2,8 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js";
-import { Bid } from "../models/Bid.js";
-import { Project } from "../models/Project.js";
+import { Bid } from "../models/bid.model.js";
+import { Project } from "../models/project.model.js";
 
 //  getting the developer profile
 const getDeveloperProfile = asyncHandler(async (req, res) => {

@@ -1,8 +1,8 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { Project } from "../models/Project.js";
-import { Bid } from "../models/Bid.js";
+import { Project } from "../models/project.model.js";
+import { Bid } from "../models/bid.model.js";
 
 // for creating a client
 const createProject = asyncHandler(async (req, res) => {

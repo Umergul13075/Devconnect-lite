@@ -1,7 +1,7 @@
 import mongoose, { Types } from "mongoose"
 const bidSchema = new mongoose.Schema({
     project:{
-        types: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref:"Project",
         required: true
     },
